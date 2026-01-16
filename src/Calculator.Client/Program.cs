@@ -1,2 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace Calculator.Client
+{
+    internal static class Program
+    {
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Calculator.Client - placeholder (Sprint 3)");
+        }
+    }
+}
