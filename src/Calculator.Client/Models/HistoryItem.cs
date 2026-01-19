@@ -6,19 +6,21 @@ namespace Calculator.Client.Models
     {
         public DateTime LocalTime { get; }
         public string Expression { get; }
-        public string Response { get; }
+        public bool IsOk { get; }
+        public string DisplayResult { get; }
 
-        public HistoryItem(DateTime localTime, string expression, string response)
+        public HistoryItem(DateTime localTime, string expression, bool isOk, string displayResult)
         {
             LocalTime = localTime;
             Expression = expression;
-            Response = response;
+            IsOk = isOk;
+            DisplayResult = displayResult;
         }
 
         public override string ToString()
         {
-            // Esto controla cómo se ve en la ListBox
-            return $"{LocalTime:HH:mm:ss} | {Expression}  =>  {Response}";
+            string status = IsOk ? "=>" : "=> ERROR:";
+            return $"{LocalTime:HH:mm:ss} | {Expression} {status} {DisplayResult}";
         }
     }
 }
