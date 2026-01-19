@@ -13,23 +13,62 @@ namespace Calculator.Client
         public LogsForm()
         {
             InitializeComponent();
-            lblFolder.Text = "No folder selected";
+
+            // 1) Autodetect al abrir
+            _logsFolderPath = TryAutoDetectLogsFolder();
+
+            if (!string.IsNullOrWhiteSpace(_logsFolderPath) && Directory.Exists(_logsFolderPath))
+            {
+                lblFolder.Text = _logsFolderPath;
+                RefreshFileList();
+            }
+            else
+            {
+                lblFolder.Text = "Logs folder not found (select it).";
+            }
         }
 
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
             using var dialog = new FolderBrowserDialog
             {
-                Description = "Select the Server logs folder (e.g., Calculator.Server\\logs)"
+                Description = "Select the Server logs folder (e.g., src\\Calculator.Server\\logs)"
             };
 
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
                 _logsFolderPath = dialog.SelectedPath;
                 lblFolder.Text = _logsFolderPath;
-
                 RefreshFileList();
             }
+        }
+
+        private static string? TryAutoDetectLogsFolder()
+        {
+            // Base: directorio de ejecución del cliente (bin\Debug\...)
+            string baseDir = AppContext.BaseDirectory;
+
+            // Subimos varios niveles buscando src\Calculator.Server\logs o Calculator.Server\logs
+            var dir = new DirectoryInfo(baseDir);
+
+            for (int i = 0; i < 10 && dir != null; i++)
+            {
+                // Opción 1: repo típico con src
+                string candidate1 = Path.Combine(dir.FullName, "src", "Calculator.Server", "logs");
+                if (Directory.Exists(candidate1)) return candidate1;
+
+                // Opción 2: si estás ejecutando desde la raíz (sin src)
+                string candidate2 = Path.Combine(dir.FullName, "Calculator.Server", "logs");
+                if (Directory.Exists(candidate2)) return candidate2;
+
+                // Opción 3: si logs está cerca
+                string candidate3 = Path.Combine(dir.FullName, "logs");
+                if (Directory.Exists(candidate3)) return candidate3;
+
+                dir = dir.Parent;
+            }
+
+            return null;
         }
 
         private void RefreshFileList()
@@ -42,10 +81,11 @@ namespace Calculator.Client
 
             var files = Directory.GetFiles(_logsFolderPath, "client_*.csv")
                                 .OrderBy(f => f)
+                                .Select(Path.GetFileName)
                                 .ToArray();
 
             foreach (var file in files)
-                cmbFiles.Items.Add(Path.GetFileName(file));
+                cmbFiles.Items.Add(file);
 
             if (cmbFiles.Items.Count > 0)
                 cmbFiles.SelectedIndex = 0;
@@ -66,7 +106,6 @@ namespace Calculator.Client
 
         private void LoadCsvIntoGrid(string csvPath)
         {
-            // CSV: timestamp, "expression", "result"
             var table = new DataTable();
             table.Columns.Add("timestamp");
             table.Columns.Add("expression");
@@ -74,27 +113,20 @@ namespace Calculator.Client
 
             var lines = File.ReadAllLines(csvPath);
 
-            // skip header
             foreach (var line in lines.Skip(1))
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
                 if (TryParse3Columns(line, out var ts, out var expr, out var res))
-                {
                     table.Rows.Add(ts, expr, res);
-                }
                 else
-                {
-                    // Si una línea viene rara, la mostramos igual para no perder info
                     table.Rows.Add("", line, "");
-                }
             }
 
             gridLogs.DataSource = table;
             gridLogs.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // Parser simple para 3 columnas con comillas (maneja "" dentro de comillas)
         private static bool TryParse3Columns(string line, out string col1, out string col2, out string col3)
         {
             col1 = col2 = col3 = "";
@@ -105,7 +137,6 @@ namespace Calculator.Client
             col1 = line.Substring(0, firstComma).Trim();
             string rest = line.Substring(firstComma + 1);
 
-            // col2 y col3 vienen como "....","...."
             if (!TryReadQuotedCsvField(rest, out col2, out int consumed1))
                 return false;
 
@@ -133,7 +164,6 @@ namespace Calculator.Client
             {
                 if (text[i] == '"')
                 {
-                    // Escaped quote?
                     if (i + 1 < text.Length && text[i + 1] == '"')
                     {
                         result.Append('"');
@@ -141,7 +171,6 @@ namespace Calculator.Client
                         continue;
                     }
 
-                    // End quote
                     i++;
                     value = result.ToString();
                     consumed = i;
