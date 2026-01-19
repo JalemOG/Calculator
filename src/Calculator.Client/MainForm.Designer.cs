@@ -3,7 +3,7 @@
     partial class MainForm
     {
         private System.ComponentModel.IContainer components = null;
-
+        private System.Windows.Forms.Button btnViewLogs;
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.NumericUpDown numPort;
         private System.Windows.Forms.Button btnConnect;
@@ -59,6 +59,16 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
 
+            // btnViewLogs
+            this.btnViewLogs = new System.Windows.Forms.Button();
+            this.btnViewLogs.Location = new System.Drawing.Point(314, 86);
+            this.btnViewLogs.Name = "btnViewLogs";
+            this.btnViewLogs.Size = new System.Drawing.Size(94, 29);
+            this.btnViewLogs.TabIndex = 7;
+            this.btnViewLogs.Text = "View Logs";
+            this.btnViewLogs.UseVisualStyleBackColor = true;
+            this.btnViewLogs.Click += new System.EventHandler(this.btnViewLogs_Click);
+
             // lblStatus
             this.lblStatus.AutoSize = true;
             this.lblStatus.Location = new System.Drawing.Point(414, 16);
@@ -102,11 +112,18 @@
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.numPort);
             this.Controls.Add(this.txtHost);
+            this.Controls.Add(this.btnViewLogs);
             this.Name = "MainForm";
             this.Text = "Calculator Client";
             ((System.ComponentModel.ISupportInitialize)(this.numPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private void btnViewLogs_Click(object sender, EventArgs e)
+        {
+            using var form = new LogsForm();
+            form.ShowDialog(this);
+        }
+
     }
 }
