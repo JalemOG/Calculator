@@ -71,5 +71,5 @@ dotnet test
 ---
 
 ## ✍️ Autor
-**Julian**  
+**Janik Zúñiga Hamilton**  
 Instituto Tecnológico de Costa Rica
