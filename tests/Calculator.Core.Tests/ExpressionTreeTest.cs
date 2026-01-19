@@ -45,7 +45,6 @@ namespace Calculator.Core.Tests
         public void BuildFromPostfix_InvalidPostfix_Throws()
         {
             // "5 +" en postfix es inválido (faltan operandos)
-            // Construimos tokens manualmente para simular postfix inválido
             var badPostfix = new System.Collections.Generic.List<Token>
             {
                 Token.Number(5),
