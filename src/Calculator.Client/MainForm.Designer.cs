@@ -61,7 +61,7 @@
 
             // btnViewLogs
             this.btnViewLogs = new System.Windows.Forms.Button();
-            this.btnViewLogs.Location = new System.Drawing.Point(314, 86);
+            this.btnViewLogs.Location = new System.Drawing.Point(414, 11);
             this.btnViewLogs.Name = "btnViewLogs";
             this.btnViewLogs.Size = new System.Drawing.Size(94, 29);
             this.btnViewLogs.TabIndex = 7;
@@ -71,21 +71,21 @@
 
             // lblStatus
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(414, 16);
+            this.lblStatus.Location = new System.Drawing.Point(12, 44);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(93, 20);
             this.lblStatus.TabIndex = 3;
             this.lblStatus.Text = "Disconnected";
 
             // txtExpression
-            this.txtExpression.Location = new System.Drawing.Point(12, 52);
+            this.txtExpression.Location = new System.Drawing.Point(12, 72);
             this.txtExpression.Name = "txtExpression";
             this.txtExpression.Size = new System.Drawing.Size(396, 27);
             this.txtExpression.TabIndex = 4;
             this.txtExpression.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtExpression_KeyDown);
 
             // btnSend
-            this.btnSend.Location = new System.Drawing.Point(414, 51);
+            this.btnSend.Location = new System.Drawing.Point(414, 71);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(94, 29);
             this.btnSend.TabIndex = 5;
@@ -96,15 +96,15 @@
             // lstHistory
             this.lstHistory.FormattingEnabled = true;
             this.lstHistory.ItemHeight = 20;
-            this.lstHistory.Location = new System.Drawing.Point(12, 92);
+            this.lstHistory.Location = new System.Drawing.Point(12, 112);
             this.lstHistory.Name = "lstHistory";
-            this.lstHistory.Size = new System.Drawing.Size(496, 304);
+            this.lstHistory.Size = new System.Drawing.Size(516, 304);
             this.lstHistory.TabIndex = 6;
 
             // MainForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 415);
+            this.ClientSize = new System.Drawing.Size(540, 430);
             this.Controls.Add(this.lstHistory);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtExpression);
