@@ -1,11 +1,11 @@
-# 📐 Calculator – Proyecto 3  
+#  Calculator – Proyecto 3  
 **Algoritmos y Estructuras de Datos I**
 
 Este proyecto implementa un **sistema cliente–servidor de cálculo de expresiones aritméticas**, desarrollado en **C# (.NET 9)**, aplicando conceptos fundamentales de algoritmos, estructuras de datos y arquitectura de software.
 
 ---
 
-## 🧩 Arquitectura del Proyecto
+##  Arquitectura del Proyecto
 
 La solución está organizada en **capas bien definidas**, lo que facilita el mantenimiento, la extensibilidad y las pruebas.
 
@@ -27,7 +27,7 @@ Calculator
 
 ---
 
-## ⚙️ Descripción de los Componentes
+##  Descripción de los Componentes
 
 ### 🔹 Calculator.Core
 Contiene toda la **lógica algorítmica del sistema**, independiente de red o interfaz gráfica.
@@ -62,7 +62,7 @@ Funcionalidades:
 
 ---
 
-## 🧪 Ejecución de Pruebas
+##  Ejecución de Pruebas
 
 ```bash
 dotnet test
@@ -70,6 +70,6 @@ dotnet test
 
 ---
 
-## ✍️ Autor
+##  Autor
 **Janik Zúñiga Hamilton**  
 Instituto Tecnológico de Costa Rica
