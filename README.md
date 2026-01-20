@@ -70,6 +70,21 @@ dotnet test
 
 ---
 
+---
+
+```flowchart LR
+  U[Usuario] -->|Escribe expresión| GUI[Calculator.Client WinForms]
+  GUI -->|TCP: "expresión"| S[Calculator.Server TCP]
+  S -->|Tokenizer| T[Tokens]
+  T -->|Shunting Yard| P[Postfix]
+  P -->|Build AST| AST[Árbol de Expresión]
+  AST -->|Evaluate| R[Resultado/Error]
+  S -->|Protocolo: OK/ERR + timestamp| GUI
+  S -->|CSV por cliente| L[logs/client_X.csv]
+  GUI -->|View Logs| L
+```
+---
+
 ##  Autor
 **Janik Zúñiga Hamilton**  
 Instituto Tecnológico de Costa Rica
